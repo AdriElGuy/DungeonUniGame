@@ -11,6 +11,8 @@ public class EnemyAI : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
+    public float health;
+
     //Patrolling
     public Vector3 walkPoint;
     bool walkPointSet;
@@ -26,7 +28,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("JerrythePlayer").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -81,6 +83,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!alreadyAttacked)
         {
+            //Attack code here
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -89,5 +92,16 @@ public class EnemyAI : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+
+        if (health <= 0) Invoke(nameof(DestroyEnemy), .5f);
+    }
+    private void DestroyEnemy()
+    {
+        Destroy(gameObject);
     }
 }

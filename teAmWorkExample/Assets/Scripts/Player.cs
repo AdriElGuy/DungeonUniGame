@@ -20,9 +20,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Replace the spacebar command with a collision with a projectile, weapon, or enemy
         if (Input.GetKeyDown(KeyCode.Space))
         {
             TakeDamage(20);
+        }
+        if (currentHealth <= 0)
+        {
+            Destroy(this.gameObject);
         }
     }
 
